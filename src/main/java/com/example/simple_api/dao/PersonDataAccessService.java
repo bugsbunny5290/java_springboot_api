@@ -29,7 +29,7 @@ public class PersonDataAccessService implements PersonDao {
 
     final String sql = "INSERT INTO person (id, name) VALUES (?,?)";
 
-//    return jdbcTemplate.update(sql);
+//    return jdbcTemplate.update(sql, );
 
     DB.add(new Person(id, person.getName()));
     return 1;
@@ -59,9 +59,10 @@ public class PersonDataAccessService implements PersonDao {
   @Override
   public int deletePersonById(UUID id) {
 
-    final String sql = "DELETE * FROM person WHERE id = ?";
+    final String sql = "DELETE FROM person WHERE id = ?";
 
-    return jdbcTemplate.update(sql, id);
+    jdbcTemplate.update(sql, id);
+    return 1;
 
   }
 
