@@ -29,9 +29,8 @@ public class PersonDataAccessService implements PersonDao {
 
     final String sql = "INSERT INTO person (id, name) VALUES (?,?)";
 
-//    return jdbcTemplate.update(sql, );
+    jdbcTemplate.update(sql, id, person.getName());
 
-    DB.add(new Person(id, person.getName()));
     return 1;
   }
 
@@ -68,13 +67,9 @@ public class PersonDataAccessService implements PersonDao {
 
   @Override
   public int updatePersonById(UUID id, Person person) {
-    return selectPersonById(id).map(p -> {
-      int indexOfPersonToUpdate = DB.indexOf(p);
-      if (indexOfPersonToUpdate >= 0) {
-        DB.set(indexOfPersonToUpdate, new Person(id, person.getName()));
-        return 1;
-      }
-      return 0;
-    }).orElse(0);
+
+    final String sql = "UPDATE person SET name = ? WHERE id = ?";
+
+    return jdbcTemplate.update(sql, person.getName(), id);
   }
 }
